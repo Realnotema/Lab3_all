@@ -11,27 +11,21 @@ namespace ns {
 
     class set {
     private:
-        int max_length;
+        static const int max_length = 10;
         int length;
-        int *data;
+        int data[max_length]{};
     public:
-        explicit set() : max_length(0), length(0), data(nullptr) {};
+        explicit set() : length(0) {};
         explicit set(int);
-        explicit set(int, const int *);
-        set(set &);
-        set(set &&) noexcept;
-        ~set();
+        explicit set(int, int *);
 
-        set &intersection(set &) const;
+        std::ostream &print(std::ostream &); // std::ostream - cin cout
+        std::istream &scan(std::istream &);
+        set &merge(set &);
+        void add_element(int);
+        set &intersection(set &);
+        set &subtraction(set &);
         int is_in_set(int);
-
-        friend std::ostream &operator<<(std::ostream &, const set &);
-        friend std::istream &operator>>(std::istream &, set &);
-        set &operator+(set &);
-        set &operator+=(int);
-        set &operator-(set &);
-        set &operator=(const set &);
-        set &operator=(set &&);
     };
 
     template <class T>

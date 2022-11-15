@@ -5,12 +5,10 @@
 using namespace ns;
 
 set::set(int len) {
-    data = new int[len];
+    length = len;
     for (int i = 0; i < len; i++) {
         data[i] = i + 1;
     }
-    length = len;
-    max_length = len;
 }
 
 set::set(int len, const int *array) {
@@ -63,13 +61,8 @@ set &set::operator+(set &merge_data) {
 }
 
 set &set::operator+=(int value) {
-    if (length == max_length){
-        max_length = 2 * (max_length + 1);
-        int *temp = new int[max_length];
-        std::move(data, (data + length), temp);
-        delete[] data;
-        data = temp;
-    }
+    if (length == max_length)
+        throw std::overflow_error("Overflow error");
     for (int i = 0; i < length; i++)
         if (data[i] == value)
             throw std::range_error("Element is of the data already");
@@ -90,48 +83,4 @@ set &set::operator-(set &sub_data) {
         }
     }
     return new_data;
-}
-
-set::~set() {
-    delete[] data;
-}
-
-set::set(set &other) { // копирующий
-    length = other.length;
-    max_length = other.max_length;
-    data = new int[max_length];
-    for (int i = 0; i < other.length; i++) {
-        data[i] = other.data[i];
-    }
-}
-
-set::set(set &&other) noexcept { // перемещающий
-    data = other.data;
-    length = other.length;
-    max_length = other.max_length;
-    other.data = nullptr;
-    other.length = 0;
-    other.max_length = 0;
-}
-
-set &set::operator=(const set &other) {
-    delete[] data;
-    length = other.length;
-    max_length = other.max_length;
-    data = new int[max_length];
-    for (int i = 0; i < other.length; i++) {
-        data[i] = other.data[i];
-    }
-    return *this;
-}
-
-set &set::operator=(set &&other) {
-    delete[] data;
-    data = other.data;
-    length = other.length;
-    max_length = other.max_length;
-    other.data = nullptr;
-    other.length = 0;
-    other.max_length = 0;
-    return *this;
 }

@@ -22,14 +22,14 @@ namespace ns {
         set(set &&) noexcept;
         ~set();
 
-        set &intersection(set &) const;
+        set intersection(set &) const;
         int is_in_set(int);
 
         friend std::ostream &operator<<(std::ostream &, const set &);
         friend std::istream &operator>>(std::istream &, set &);
-        set &operator+(set &);
+        const set operator+(set &);
         set &operator+=(int);
-        set &operator-(set &);
+        const set operator-(set &);
         set &operator=(const set &);
         set &operator=(set &&);
     };

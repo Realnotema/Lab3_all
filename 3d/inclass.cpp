@@ -19,7 +19,7 @@ set::set(int len, const int *array) {
     }
 }
 
-set &set::intersection(set &inter_data) const {
+set set::intersection(set &inter_data) const {
     set new_data;
     for (int i = 0; i < length; i++) {
         for (int j = 0; j < inter_data.length; j++) {
@@ -38,8 +38,9 @@ int set::is_in_set(int value) {
 }
 
 std::ostream &ns::operator<<(std::ostream &c, const set &data) {
-    for (int i = 0; i < data.length; i++)
-        c << data.data[i] << endl;
+    for (int i = 0; i < data.length; i++) {
+        c << data.data[i] << " ";
+    }
     return c;
 }
 
@@ -53,7 +54,7 @@ std::istream &ns::operator>>(std::istream &s, set &data) {
     return s;
 }
 
-set &set::operator+(set &merge_data) {
+const set set::operator+(set &merge_data) {
     set new_data;
     for (int i = 0; i < length; i++)
         new_data += data[i];
@@ -78,15 +79,13 @@ set &set::operator+=(int value) {
     return *this;
 }
 
-set &set::operator-(set &sub_data) {
+const set set::operator-(set &sub_data) {
     set inter_data = intersection(sub_data);
     set new_data;
     for (int i = 0; i < length; i++) {
         for (int j = 0; j < inter_data.length; j++) {
-            if (data[i] == inter_data.data[i])
+            if (inter_data.is_in_set(data[i]))
                 new_data += data[i];
-            if (sub_data.data[i] == inter_data.data[i])
-                new_data += sub_data.data[i];
         }
     }
     return new_data;

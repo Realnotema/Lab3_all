@@ -1,6 +1,6 @@
 #include <iostream>
 #include <stdexcept>
-#include "intclass.h"
+#include "inclass.h"
 
 using namespace ns;
 
